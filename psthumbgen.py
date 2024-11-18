@@ -62,7 +62,8 @@ def parse_args():
                              "Subdirectories will always be processed.")
     parser.add_argument("-e", "--eaDir", required=False, default=False, action="store_true",
                         help="write directly to @eaDir rather than eaDir_tmp")
-    parser.add_argument("-f", "--force", required=False, default=False, action="store_true",)
+    parser.add_argument("-f", "--force", required=False, default=False, action="store_true",
+                        help="force regeneration of all thumbnails.")
 
     return parser.parse_args()
 
