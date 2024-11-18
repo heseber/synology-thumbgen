@@ -157,7 +157,7 @@ def create_thumbnails(source_path, dest_dir):
             if os.path.exists(os.path.join(dest_dir, thumb[0])):
                 continue
             else:
-                skip_all = False
+                skip_this = False
                 break
 
     if skip_this:
