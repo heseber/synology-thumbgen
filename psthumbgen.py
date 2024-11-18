@@ -206,7 +206,7 @@ def create_thumbnails(source_path, dest_dir):
                 continue
 
         try:
-            im.thumbnail((sys.maxsize, thumb[1]), Image.ANTIALIAS)
+            im.thumbnail((sys.maxsize, thumb[1]), Image.LANCZOS)
             im.save(os.path.join(dest_dir, thumb[0]))
         except Exception as e:
             print(e)
