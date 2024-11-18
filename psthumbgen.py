@@ -5,6 +5,7 @@ import argparse
 import errno
 import time
 from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
 from multiprocessing import Pool
 from multiprocessing import Value
 
@@ -62,7 +63,9 @@ def find_files(dir):
     for root, dirs, files in os.walk(dir):
         for name in files:
             if re.match(valid_exts_re, name, re.IGNORECASE) \
-                    and not name.startswith('SYNOPHOTO_THUMB'):
+                    and not root.endswith('@eaDir') \
+                    and not name.startswith('SYNOPHOTO_THUMB') \
+                    and not name.startswith('.'):
                 yield os.path.join(root, name)
 
 
@@ -80,7 +83,7 @@ def process_file(file_path):
     print(file_path)
 
     (dir, filename) = os.path.split(file_path)
-    thumb_dir = os.path.join(dir, 'eaDir_tmp', filename)
+    thumb_dir = os.path.join(dir, '@eaDir', filename)
     ensure_directory_exists(thumb_dir)
 
     create_thumbnails(file_path, thumb_dir)
@@ -100,16 +103,16 @@ def create_thumbnails(source_path, dest_dir):
     im = Image.open(source_path)
 
     to_generate = (('SYNOPHOTO_THUMB_XL.jpg', 1280),
-                   ('SYNOPHOTO_THUMB_B.jpg', 640),
+                   ('SYNOPHOTO_THUMB_B.jpg', 480),
                    ('SYNOPHOTO_THUMB_M.jpg', 320),
-                   ('SYNOPHOTO_THUMB_PREVIEW.jpg', 160),
-                   ('SYNOPHOTO_THUMB_S.jpg', 120))
+                   ('SYNOPHOTO_THUMB_SM.jpg', 240),
+                   ('SYNOPHOTO_THUMB_S.jpg', 90))
 
     for thumb in to_generate:
         if os.path.exists(os.path.join(dest_dir, thumb[0])):
             continue
 
-        im.thumbnail((thumb[1], thumb[1]), Image.ANTIALIAS)
+        im.thumbnail((sys.maxsize, thumb[1]), Image.LANCZOS)
         im.save(os.path.join(dest_dir, thumb[0]))
 
 
