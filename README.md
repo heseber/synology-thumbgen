@@ -1,6 +1,8 @@
 # Thumbnail Generator for Synology PhotoStation
 
-Creating thumbnails on the consumer level DiskStation NAS boxes by Synology is incredibly slow which makes indexing of large photo collections take forever to complete. It's much, much faster (days -> hours) to generate the thumbnails on your desktop computer over e.g. SMB using this small Python script. Alternatively, create the thumbnails locally on your desktop or laptop computer before before transferring images and thumbnails to the Synology DiskStation, for example with `rsync`. Thanks to user **tsohr**, creating thumbnails for videos is now supported as well.
+Creating thumbnails on the consumer level DiskStation NAS boxes by Synology is incredibly slow which makes indexing of large photo collections take forever to complete. It's much, much faster (days -> hours) to generate the thumbnails on your desktop computer over e.g. SMB using this small Python script. Alternatively, create the thumbnails locally on your desktop or laptop computer before before transferring images and thumbnails to the Synology DiskStation, for example with `rsync`.
+
+Thanks to user **tsohr**, creating thumbnails for videos is now supported as well, although it might need further enhancements - while the tool generates thumbnails for the original video files, Synology often creates an additional converted video format in `@eaDir` and also thumbnails for this converted video format. Further investigation is needed to understand when such converted videos are created and which output video format is used for which video format of the original file.
 
 ## Usage
 
