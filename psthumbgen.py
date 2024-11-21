@@ -1,18 +1,16 @@
-import sys
-import os
-import re
 import argparse
 import errno
+import os
+import re
+import subprocess
+import sys
+import tempfile
 import time
-from PIL import Image
+from multiprocessing import Pool, Value
+
+from PIL import Image, ImageOps
 
 Image.MAX_IMAGE_PIXELS = None
-from multiprocessing import Pool
-from multiprocessing import Value
-import subprocess
-import tempfile
-from PIL import ImageOps
-from PIL.ExifTags import TAGS
 
 
 class State(object):
@@ -194,7 +192,6 @@ def create_thumbnails(source_path, dest_dir):
         return
 
     try:
-        exif = im._getexif()
         image = ImageOps.exif_transpose(im)
         im = image
     except Exception as e:
@@ -216,4 +213,5 @@ def create_thumbnails(source_path, dest_dir):
 
 
 if __name__ == "__main__":
+    sys.exit(main())
     sys.exit(main())
